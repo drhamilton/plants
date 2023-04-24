@@ -44,22 +44,24 @@ async function seed() {
     {
       slug: "radish",
       name: "Radish",
-      markdown: "Here's info about the radish"
+      markdown: "Here's info about the radish",
+      brand: "Johnnys",
+      daysToMaturity: 30
     },
     {
       slug: "cherry-tomato",
       name: "Cherry Tomato",
       markdown: `
               # Sun Gold botanical interests
-            `.trim()
+            `.trim(),
+      brand: "Botanical Interests",
+      daysToMaturity: 60
     },
   ]
 
   for (const plant of plants) {
-    await prisma.plant.upsert({
-      where: { slug: plant.slug },
-      update: plant,
-      create: plant
+    await prisma.plant.create({
+      data: plant
     })
   }
 

@@ -10,11 +10,13 @@ export const action = async ({ request }: ActionArgs) => {
   const name = formData.get("name");
   const slug = formData.get("slug");
   const markdown = formData.get("markdown");
+  const planted = formData.get("planted");
 
   const errors = {
     name: name ? null : "Name is required",
     slug: slug ? null : "Slug is required",
     markdown: markdown ? null : "Markdown is required",
+    planted: planted ? null : "Date planted is required",
   };
   const hasErrors = Object.values(errors).some((errorMessage) => errorMessage);
 
@@ -23,10 +25,9 @@ export const action = async ({ request }: ActionArgs) => {
   }
 
   invariant(typeof name === "string", "name must be string");
-
   invariant(typeof slug === "string", "slug must be string");
-
   invariant(typeof markdown === "string", "markdown must be string");
+  invariant(planted instanceof Date, "planted must be date");
 
   await createPlant({ name, slug, markdown });
 

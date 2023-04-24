@@ -38,10 +38,36 @@ model Note {
 }
 
 model Plant {
-  slug     String @id
-  name     String
-  markdown String
+  id             Int    @id @default(autoincrement())
+  slug           String @unique
+  name           String
+  markdown       String
+  brand          String
+  daysToMaturity Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  crops Crop[]
+}
+
+model Crop {
+  id       Int      @id @default(autoincrement())
+  dateSown DateTime
+  notes    String?
+  quantity Int
+  location String
+
+  plantId Int
+  plant   Plant       @relation(fields: [plantId], references: [id])
+  images  CropImage[]
+}
+
+model CropImage {
+  id   Int      @id @default(autoincrement())
+  url  String
+  date DateTime
+
+  crop   Crop @relation(fields: [cropId], references: [id])
+  cropId Int
 }
