@@ -10,6 +10,10 @@ async function seed() {
   await prisma.user.delete({ where: { email } }).catch(() => {
     // no worries if it doesn't exist yet
   });
+  await prisma.crop.deleteMany().catch(() => { })
+  await prisma.plant.deleteMany().catch(() => {
+    // no worries if it doesn't exist yet
+  });
 
   const hashedPassword = await bcrypt.hash("racheliscool", 10);
 
@@ -40,30 +44,28 @@ async function seed() {
     },
   });
 
-  const plants = [
-    {
-      slug: "radish",
-      name: "Radish",
-      markdown: "Here's info about the radish",
-      brand: "Johnnys",
-      daysToMaturity: 30
+  await prisma.plant.create({
+    data: {
+      name: "Tomato Plant",
+      slug: "tomato",
+      markdown: "info",
+      brand: "johnnys",
+      daysToMaturity: 60,
+      crops: {
+        create: [
+          {
+            name: "Stinky",
+            dateSown: new Date(),
+            quantity: 50,
+            location: "2B"
+          },
+        ],
+      },
     },
-    {
-      slug: "cherry-tomato",
-      name: "Cherry Tomato",
-      markdown: `
-              # Sun Gold botanical interests
-            `.trim(),
-      brand: "Botanical Interests",
-      daysToMaturity: 60
+    include: {
+      crops: true,
     },
-  ]
-
-  for (const plant of plants) {
-    await prisma.plant.create({
-      data: plant
-    })
-  }
+  });
 
   console.log(`Database has been seeded. 🌱`);
 }

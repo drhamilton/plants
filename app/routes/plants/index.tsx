@@ -1,13 +1,13 @@
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import { getPlants } from "~/models/plant.server";
+
 export const loader = async () => {
   return json({ plants: await getPlants() });
 };
 
 export default function Plants() {
   const { plants } = useLoaderData<typeof loader>();
-  console.log(plants);
 
   return (
     <main>

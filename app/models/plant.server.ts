@@ -9,8 +9,12 @@ export async function getPlant(slug: string) {
     return prisma.plant.findUnique({ where: { slug } })
 }
 
+export async function getPlantWithCrops(slug: string) {
+    return prisma.plant.findUnique({ where: { slug }, include: { crops: { select: { name: true } } } })
+}
+
 export async function createPlant(
-    plant: Pick<Plant, "slug" | "name" | "markdown">
+    plant: Pick<Plant, "slug" | "name" | "markdown" | "brand" | "daysToMaturity">
 ) {
     return prisma.plant.create({ data: plant })
 }
