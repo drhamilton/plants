@@ -22,7 +22,9 @@ export default function PlantSlug() {
     <main className="mx-auto max-w-4xl">
       <h1 className="my-6 border-b-2 text-center text-3xl">{plant.name}</h1>
       {plant.crops.map((crop) => (
-        <div key={crop.name}>{crop.name}</div>
+        <div key={crop.name}>
+          <Link to={`/crops/${String(crop.id)}`}>{crop.name}</Link>
+        </div>
       ))}
       <div dangerouslySetInnerHTML={{ __html: html }} />
       <Link to={`/plants/admin/${plant.slug}`}>Edit</Link>

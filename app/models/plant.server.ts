@@ -10,7 +10,7 @@ export async function getPlant(slug: string) {
 }
 
 export async function getPlantWithCrops(slug: string) {
-    return prisma.plant.findUnique({ where: { slug }, include: { crops: { select: { name: true } } } })
+    return prisma.plant.findUnique({ where: { slug }, include: { crops: { select: { name: true, id: true } } } })
 }
 
 export async function createPlant(

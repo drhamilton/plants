@@ -10,13 +10,13 @@ export const action = async ({ request }: ActionArgs) => {
   const name = formData.get("name");
   const slug = formData.get("slug");
   const markdown = formData.get("markdown");
-  const planted = formData.get("planted");
+  const daysToMaturity = formData.get("daysToMaturity");
+  const brand = formData.get("brand");
 
   const errors = {
     name: name ? null : "Name is required",
     slug: slug ? null : "Slug is required",
     markdown: markdown ? null : "Markdown is required",
-    planted: planted ? null : "Date planted is required",
   };
   const hasErrors = Object.values(errors).some((errorMessage) => errorMessage);
 
@@ -27,9 +27,13 @@ export const action = async ({ request }: ActionArgs) => {
   invariant(typeof name === "string", "name must be string");
   invariant(typeof slug === "string", "slug must be string");
   invariant(typeof markdown === "string", "markdown must be string");
-  invariant(planted instanceof Date, "planted must be date");
+  invariant(typeof brand === "string", "brand must be string");
+  invariant(
+    typeof daysToMaturity === "number",
+    "days to maturity must be number"
+  );
 
-  await createPlant({ name, slug, markdown });
+  await createPlant({ name, slug, markdown, brand, daysToMaturity });
 
   return redirect("/plants/admin");
 };
