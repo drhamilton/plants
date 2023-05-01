@@ -11,7 +11,7 @@ export default function Plants() {
 
   return (
     <main>
-      <h1>Plants</h1>
+      <h1 className="mb-4 text-4xl font-bold">Plants</h1>
       <Link to="admin" className="text-red-600 underline">
         Admin
       </Link>
