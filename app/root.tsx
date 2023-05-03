@@ -29,9 +29,13 @@ export async function loader({ request }: LoaderArgs) {
   });
 }
 
-export const Nav = () => {
+interface NavProps {
+  className?: string;
+}
+
+export const Nav = ({ className }: NavProps) => {
   return (
-    <nav className="w-1/4 bg-green-200 p-4">
+    <nav className={`bg-green-200 p-4 ${className}`}>
       <ul>
         <li>
           <Link
@@ -60,8 +64,8 @@ export default function App() {
       </head>
       <body className="h-full">
         <div className="flex h-full">
-          <Nav />
-          <div className="p-4">
+          <Nav className="w-2/12" />
+          <div className="w-10/12 p-4">
             <Outlet />
           </div>
         </div>
