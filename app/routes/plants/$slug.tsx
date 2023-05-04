@@ -19,15 +19,16 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function PlantSlug() {
   const { plant, html } = useLoaderData<typeof loader>();
   return (
-    <main className="mx-auto max-w-4xl">
-      <h1 className="my-6 border-b-2 text-center text-3xl">{plant.name}</h1>
+    <div className="h-full border p-4">
+      {/* <h1 className="my-6 border-b-2 text-center text-3xl">{plant.name}</h1>
       {plant.crops.map((crop) => (
         <div key={crop.name}>
           <Link to={`/crops/${String(crop.id)}`}>{crop.name}</Link>
         </div>
-      ))}
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-      <Link to={`/plants/admin/${plant.slug}`}>Edit</Link>
-    </main>
+      ))} */}
+      {/* <div dangerouslySetInnerHTML={{ __html: html }} /> */}
+
+      <pre>{JSON.stringify(plant, null, 2)}</pre>
+    </div>
   );
 }

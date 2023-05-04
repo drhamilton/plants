@@ -10,13 +10,15 @@ export const action = async ({ request }: ActionArgs) => {
   const name = formData.get("name");
   const slug = formData.get("slug");
   const markdown = formData.get("markdown");
-  const daysToMaturity = formData.get("daysToMaturity");
+  const daysToMaturity = Number(formData.get("daysToMaturity"));
   const brand = formData.get("brand");
 
   const errors = {
     name: name ? null : "Name is required",
     slug: slug ? null : "Slug is required",
     markdown: markdown ? null : "Markdown is required",
+    brand: brand ? null : "Brand is required",
+    daysToMaturity: daysToMaturity ? null : "Days to Maturity is required",
   };
   const hasErrors = Object.values(errors).some((errorMessage) => errorMessage);
 
@@ -35,7 +37,7 @@ export const action = async ({ request }: ActionArgs) => {
 
   await createPlant({ name, slug, markdown, brand, daysToMaturity });
 
-  return redirect("/plants/admin");
+  return redirect("/plants");
 };
 
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`;
@@ -63,6 +65,33 @@ export default function NewPlant() {
           <input type="text" name="slug" className={inputClassName} />
         </label>
       </p>
+      <p>
+        <label>
+          Plant Brand:{" "}
+          {errors?.brand ? (
+            <em className="text-red-600">{errors.brand}</em>
+          ) : null}
+          <input
+            type="text"
+            name="brand"
+            defaultValue={"N/A"}
+            className={inputClassName}
+          />
+        </label>
+      </p>{" "}
+      <p>
+        <label>
+          Days to Maturity:{" "}
+          {errors?.daysToMaturity ? (
+            <em className="text-red-600">{errors.daysToMaturity}</em>
+          ) : null}
+          <input
+            type="number"
+            name="daysToMaturity"
+            className={inputClassName}
+          />
+        </label>
+      </p>{" "}
       <p>
         <label htmlFor="markdown">Markdown: </label>
         {errors?.markdown ? (
